@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,8 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
@@ -43,20 +40,42 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
-import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
 
-@OptIn(ExperimentalGlideComposeApi::class)
+// 🎯 لیست عکس‌ها
+private val images = listOf(
+    R.drawable.img_sh,   // 1
+    R.drawable.img_ko,   // 2
+    R.drawable.img_za,   // 3
+    R.drawable.img_na,   // 4
+    R.drawable.img_na1   // 5
+)
+
+// 🚀 جلوگیری از تکرار پشت سر هم
+private var lastIndex = -1
+fun getImageByPosition(index: Int): Int {
+    return images[index % images.size]
+}
 @Composable
 fun HomeItemCard(
     navHostController: NavHostController,
-    item: PastryItem
+    item: PastryItem,
+    index: Int
 ) {
+
+    val imageRes = getImageByPosition(index)
+    Log.d(
+        "CARD_SMART",
+        "ITEM -> id=${item.ID} | title=${item.title} | image=$imageRes"
+    )
+
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
         shape = RoundedCornerShape(10.dp),
         onClick = {
-            navHostController.navigate(Screen.ProductDetailScreen.route + "?id=${item.ID}")
+            navHostController.navigate(
+                Screen.ProductDetailScreen.route + "?id=${item.ID}"
+            )
         },
         modifier = Modifier
             .padding(5.dp)
@@ -64,93 +83,91 @@ fun HomeItemCard(
             .height(220.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            // 🖼️ IMAGE SECTION
             Box(
                 modifier = Modifier
                     .width(235.dp)
                     .height(145.dp)
             ) {
-                GlideImage(
+
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(5.dp)
                         .clip(RoundedCornerShape(15.dp)),
-                    model = item.thumbnail,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-                ){
-                    it.placeholder(R.drawable.img_place_holder)
-                }
+                    contentScale = ContentScale.Crop
+                )
+
+                // 🔥 DISCOUNT
                 if (item.has_discount) {
-                    Box(modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.TopStart) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.TopStart
+                    ) {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.size(62.dp,37.dp)
+                            modifier = Modifier.size(62.dp, 37.dp)
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.img_off),
-                                contentDescription = "",
+                                contentDescription = null,
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.FillBounds
                             )
-                            Box(contentAlignment = Alignment.Center) {
-                                Text(
-                                    text = item.discount,
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.body2,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
+
+                            Text(
+                                text = item.discount,
+                                color = Color.White,
+                                style = MaterialTheme.typography.body2,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
-
-
                     }
-
                 }
-
             }
 
+            // 📦 INFO SECTION
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 15.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+
+                Row {
                     Text(
                         text = item.title,
                         style = MaterialTheme.typography.h3,
                         color = MaterialTheme.colorScheme.darkText,
                         fontWeight = FontWeight.Bold
                     )
+
                     Spacer(modifier = Modifier.width(4.dp))
+
                     Text(
                         text = "(۱ کیلو )",
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colorScheme.darkText,
                         fontWeight = FontWeight.Bold
                     )
-
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Row {
+
                         if (item.has_discount) {
                             Text(
                                 text = pastryByLocateAndSeparator((item.price / 10).toString()),
@@ -162,36 +179,33 @@ fun HomeItemCard(
                         }
 
                         Text(
-                            text = " ${pastryByLocateAndSeparator((item.sale_price / 10).toString())} ${"تومان"}",
+                            text = "${pastryByLocateAndSeparator((item.sale_price / 10).toString())} تومان",
                             style = MaterialTheme.typography.body1,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.darkText
-
                         )
-
                     }
+
                     IconButton(
                         modifier = Modifier.size(40.dp),
                         onClick = {
-                            navHostController.navigate(Screen.ProductDetailScreen.route + "?id=${item.ID}")
+                            navHostController.navigate(
+                                Screen.ProductDetailScreen.route + "?id=${item.ID}"
+                            )
                             showAddOrder.value = true
-                        }) {
+                        }
+                    ) {
                         Icon(
-                            painterResource(id = R.drawable.img_shopping_card_recycler),
-                            contentDescription = "",
+                            painter = painterResource(
+                                id = R.drawable.img_shopping_card_recycler
+                            ),
+                            contentDescription = null,
                             tint = Color.Black,
                             modifier = Modifier.size(35.dp, 25.dp)
                         )
                     }
-
-
                 }
-
             }
-
-
         }
-
     }
-
 }

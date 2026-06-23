@@ -150,7 +150,7 @@ private fun ProductScreen(
             ) {
                 item { Spacer(modifier = Modifier.height(10.dp)) }
                 item { Header(pastryItem.pastry!!.title) }
-                item { TopSliderSection(img) }
+                item { TopSliderSection() }
                 item { Header("مواد بکار رفته در شیرینی") }
                 items(pastryItem.pastry!!.materials) {
                     MaterialCard(item = it)

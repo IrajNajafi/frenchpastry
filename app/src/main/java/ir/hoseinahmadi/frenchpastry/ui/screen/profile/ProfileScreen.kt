@@ -132,29 +132,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(10.dp))
             Header("سفارش های من")
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 4.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                BasketItem(
-                    onClick = { /*TODO*/ },
-                    painter = painterResource(id = R.drawable.img_sell_state1)
-                )
-                BasketItem(
-                    onClick = { /*TODO*/ },
-                    painter = painterResource(id = R.drawable.img_sell_state2)
-                )
-                BasketItem(
-                    onClick = { /*TODO*/ },
-                    painter = painterResource(id = R.drawable.img_sell_state3)
-                )
-                BasketItem(
-                    onClick = { /*TODO*/ },
-                    painter = painterResource(id = R.drawable.img_sell_state4)
-                )
-            }
+
             Spacer(modifier = Modifier.height(10.dp))
             FlowRow(
                 modifier = Modifier
@@ -177,18 +155,8 @@ fun ProfileScreen(
                     },
                     painter = painterResource(id = R.drawable.img_my_address)
                 )
-                ProfileItem(
-                    onClick = {},
-                    painter = painterResource(id = R.drawable.img_my_discounts)
-                )
-                ProfileItem(
-                    onClick = {},
-                    painter = painterResource(id = R.drawable.img_cake_custom)
-                )
-                ProfileItem(
-                    onClick = {},
-                    painter = painterResource(id = R.drawable.img_my_notification)
-                )
+
+
             }
 
 

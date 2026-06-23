@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -49,7 +48,6 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.InputValidation
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
-import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
 import kotlinx.coroutines.delay
@@ -64,9 +62,9 @@ fun LoginScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
 
-    val imgUr = listOf(
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/pastry/head_login.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/pastry/logo_login.png",
+    val img = listOf(
+        R.drawable.img_pastry_login,
+        R.drawable.white_logo,
     )
 
     val context = LocalContext.current
@@ -106,7 +104,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .padding(top = 55.dp)
                         .size(205.dp, 121.dp),
-                    model = imgUr[1],
+                    model = img[1],
                     contentDescription = "",
                 )
             }
@@ -180,14 +178,14 @@ fun LoginScreen(
 
             LaunchedEffect(true) {
                 homeViewModel.sendCodeResponse.collectLatest {
-                   if (it.http_code==200){
-                       Log.e("pasi", it.message)
-                       steepLogin.intValue = 2
-                       if (!isTimerRunning) {
-                           timeLeft = 180 // Reset the timer to 2 minutes
-                           isTimerRunning = true // Start the timer
-                       }
-                   }
+                    if (it.http_code == 200) {
+                        Log.e("pasi", it.message)
+                        steepLogin.intValue = 2
+                        if (!isTimerRunning) {
+                            timeLeft = 180 // Reset the timer to 2 minutes
+                            isTimerRunning = true // Start the timer
+                        }
+                    }
 
 
                 }
@@ -203,7 +201,7 @@ fun LoginScreen(
                 }
             }
 
-            AlertEnterCode(timeLeft,navHostController)
+            AlertEnterCode(timeLeft, navHostController)
 
 
 
@@ -237,7 +235,7 @@ fun LoginScreen(
                 AnimatedVisibility(visible = (loading && steepLogin.intValue == 1)) {
                     Loading3Dots(isDark = false)
                 }
-                AnimatedVisibility (!loading && steepLogin.intValue == 1){
+                AnimatedVisibility(!loading && steepLogin.intValue == 1) {
                     Text(
                         text = "ارسال کد به شماره موبایل من",
                         style = MaterialTheme.typography.h6,
