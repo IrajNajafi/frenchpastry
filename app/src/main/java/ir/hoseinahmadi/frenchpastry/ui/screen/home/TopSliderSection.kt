@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -35,13 +37,16 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import ir.hoseinahmadi.frenchpastry.R
 import kotlinx.coroutines.delay
-
+private val sliderImages = listOf(
+    R.drawable.img_sliderh,
+    R.drawable.img_slider2,
+    R.drawable.img_slider2
+)
 @OptIn(ExperimentalPagerApi::class, ExperimentalGlideComposeApi::class)
 @Composable
-fun TopSliderSection(
-    sliderList: List<String>
-) {
+fun TopSliderSection() {
 
+    val pagerState = rememberPagerState()
 
     Column(
         modifier = Modifier
@@ -49,57 +54,54 @@ fun TopSliderSection(
             .background(Color(0xffF0F3FF))
             .height(220.dp)
     ) {
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(4.dp)
         ) {
-            val pagerState = rememberPagerState()
-            var imageUrl by remember {
-                mutableStateOf("")
-            }
+
             HorizontalPager(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                count = sliderList.size,
+                count = sliderImages.size,
                 state = pagerState,
-                contentPadding = PaddingValues(
-                    horizontal = 5.dp,
-                )
+                contentPadding = PaddingValues(horizontal = 5.dp),
+                modifier = Modifier.fillMaxWidth()
             ) { index ->
-                imageUrl = sliderList[index]
+
+                val image = sliderImages[index]
+
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    GlideImage(
-                        model = imageUrl,
-                        contentDescription = "",
+
+                    Image(
+                        painter = painterResource(id = image),
+                        contentDescription = null,
                         modifier = Modifier
                             .padding(5.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .fillMaxSize(),
-                        contentScale = ContentScale.FillBounds
-                    ){
-                        it.placeholder(R.drawable.img_place_holder)
-                    }
+                        contentScale = ContentScale.Crop
+                    )
                 }
-
             }
+
+            // 🔘 Indicator
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ) {
+
                 Row(
                     modifier = Modifier
                         .size(80.dp, 25.dp)
-                        .clip(
-                            RoundedCornerShape(12.dp)
-                        )
+                        .clip(RoundedCornerShape(12.dp))
                         .background(Color(0xffF0F3FF)),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     HorizontalPagerIndicator(
                         pagerState = pagerState,
                         activeColor = Color.Black,
@@ -109,21 +111,14 @@ fun TopSliderSection(
                         indicatorShape = CircleShape
                     )
                 }
-
-
             }
 
+            // 🔄 Auto scroll
             LaunchedEffect(pagerState.currentPage) {
                 delay(4000)
-                var newPosition = pagerState.currentPage + 1
-                if (newPosition > sliderList.size - 1) newPosition = 0
-                pagerState.scrollToPage(newPosition)
-
+                val next = (pagerState.currentPage + 1) % sliderImages.size
+                pagerState.scrollToPage(next)
             }
         }
     }
 }
-
-
-
-

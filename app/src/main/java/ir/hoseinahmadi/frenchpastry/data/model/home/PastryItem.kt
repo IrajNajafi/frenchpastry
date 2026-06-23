@@ -15,5 +15,6 @@ data class PastryItem(
     val status: String = "",
     val stock: Int = 0,
     val thumbnail: String = "",
-    val title: String = ""
+    val title: String = "",
+    val imageRes: Int = 0
 )

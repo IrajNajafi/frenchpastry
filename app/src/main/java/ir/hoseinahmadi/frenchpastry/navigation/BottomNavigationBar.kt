@@ -45,20 +45,7 @@ fun BottomNavigationBar(
             icon = painterResource(id = R.drawable.ic_home),
         ),
 
-        MyBottomNavItem(
-            route = Screen.CategoryScreen.route,
-            icon = painterResource(id = R.drawable.ic_cake),
-        ),
 
-        MyBottomNavItem(
-            route = Screen.BasketScreen.route,
-            icon = painterResource(id = R.drawable.ic_shopping_cart),
-        ),
-
-        MyBottomNavItem(
-            route = Screen.PastryScreen.route,
-            icon = painterResource(id = R.drawable.ic_pastry),
-        ),
         MyBottomNavItem(
             route = Screen.ProfileScreen.route,
             icon = painterResource(id = R.drawable.ic_user),
@@ -66,8 +53,12 @@ fun BottomNavigationBar(
     )
 
     val backStackEntry = navHostController.currentBackStackEntryAsState()
-    val showBottomBar = backStackEntry.value?.destination?.route in item.map { it.route }
-
+    val showBottomBar =
+        backStackEntry.value?.destination?.route in listOf(
+            Screen.HomeScreen.route,
+            Screen.ProfileScreen.route,
+            Screen.BasketScreen.route
+        )
 
     AnimatedVisibility(
         visible = showBottomBar && CHECKED_LOGIN,
@@ -101,12 +92,9 @@ fun BottomNavigationBar(
                 Box(contentAlignment = Alignment.TopCenter) {
                         IconButton(onClick = {
                             if (backStackEntry.value?.destination?.route!=Screen.BasketScreen.route){
-                                navHostController
-                                    .navigate(Screen.BasketScreen.route){
-                                        popUpTo(0){
-                                            inclusive =true
-                                        }
-                                    }
+                                navHostController.navigate(Screen.BasketScreen.route) {
+                                    launchSingleTop = true
+                                }
                             }
 
                         }) {
@@ -121,70 +109,79 @@ fun BottomNavigationBar(
                 }
 
             }
+
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Bottom
             ) {
+
+                val middleIndex = item.size / 2
+
                 item.forEachIndexed { index, item ->
+
+                    if (index == middleIndex) {
+                        Spacer(modifier = Modifier.size(70.dp, 60.dp))
+                    }
+
                     val selected = item.route == backStackEntry.value?.destination?.route
-                    if (index != 2) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .size(70.dp, 60.dp)
+                    ) {
+
                         Box(
-                            modifier = Modifier.fillMaxHeight()
-                                .size(70.dp,60.dp),
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.BottomCenter
                         ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.BottomCenter
-                            ) {
-                                Row {
-                                    NavigationBarItem(
-                                        colors = NavigationBarItemDefaults.colors(
-                                            selectedIconColor = Color.Black,
-                                            unselectedIconColor = Color.DarkGray,
-                                            indicatorColor = Color.White
-                                        ),
-                                        selected = selected,
-                                        onClick = {
-                                            if (!selected){
-                                                navHostController.navigate(item.route){ popUpTo(0){ inclusive =true } }
-                                            }
-                                             },
-                                        icon = {
-                                            Icon(
-                                                painter = item.icon,
-                                                contentDescription = "",
-                                                modifier = Modifier.size(32.dp)
-                                            )
-                                        })
-                                }
-                            }
-                            if (selected) {
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-                                ) {
-                                    Image(
-                                        modifier = Modifier.fillMaxSize(),
-                                        painter = painterResource(id = R.drawable.back_item_bottom_nav),
-                                        contentDescription = "",
-                                        contentScale = ContentScale.FillBounds
+                            Row {
+                            NavigationBarItem(
+                                colors = NavigationBarItemDefaults.colors(
+                                    selectedIconColor = Color.Black,
+                                    unselectedIconColor = Color.DarkGray,
+                                    indicatorColor = Color.White
+                                ),
+                                selected = selected,
+                                onClick = {
+                                    if (!selected) {
+                                        navHostController.navigate(item.route) {
+                                            launchSingleTop = true
+                                        }
+                                    }
+                                },
+                                icon = {
+                                    Icon(
+                                        painter = item.icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(32.dp)
                                     )
                                 }
-                            }
+                            )
+                                }
+                        }
 
+                        if (selected) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.TopCenter
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.back_item_bottom_nav),
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.FillBounds
+                                )
+                            }
                         }
                     }
-                    else {
-                       Spacer(modifier = Modifier.padding(horizontal = 14.dp))
-                    }
-
-
                 }
-
-
             }
+
+
         }
     }
 

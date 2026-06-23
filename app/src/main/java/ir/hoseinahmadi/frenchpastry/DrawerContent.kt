@@ -155,8 +155,8 @@ fun DrawerContent(
                 title = "پشتیبانی",
                 onClick = {
                     try {
-                        uriHandler.openUri("tg://resolve?domain=i_hoseinam")
-                    }catch (e:Exception){
+                        uriHandler.openUri("https://t.me/Hniejh")
+                    } catch (e: Exception) {
                         Toast.makeText(context, "تلگرام یافت نشد", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -185,8 +185,8 @@ fun DrawerContent(
                 title = "ارتباط با ما",
                 onClick = {
                     try {
-                        uriHandler.openUri("tg://resolve?domain=i_hoseinam")
-                    }catch (e:Exception){
+                        uriHandler.openUri("https://t.me/Hniejh")
+                    } catch (e: Exception) {
                         Toast.makeText(context, "تلگرام یافت نشد", Toast.LENGTH_SHORT).show()
                     }
 
@@ -257,11 +257,11 @@ fun DrawerContent(
                     datStoreViewModel.saveUserLogin(false)
                     datStoreViewModel.saveUserPhone("")
                     datStoreViewModel.saveUserApiKey("")
-                    Constants.API_KEY =""
-                    Constants.CHECKED_LOGIN =false
-                    Constants.USER_NAME =""
+                    Constants.API_KEY = ""
+                    Constants.CHECKED_LOGIN = false
+                    Constants.USER_NAME = ""
                     onClick()
-                    steepLogin.intValue =1
+                    steepLogin.intValue = 1
                     navHostController.navigate(Screen.HomeScreen.route)
                 }
             )
@@ -270,14 +270,14 @@ fun DrawerContent(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.img_navigation),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(270.dp),
-                        contentScale = ContentScale.FillBounds
-                    )
+                Image(
+                    painter = painterResource(id = R.drawable.img_navigation),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(270.dp),
+                    contentScale = ContentScale.FillBounds
+                )
 
             }
         }

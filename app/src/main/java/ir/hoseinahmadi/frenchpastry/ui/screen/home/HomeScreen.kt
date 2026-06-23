@@ -139,7 +139,7 @@ fun Home(
                         .background(Color(0xffF0F3FF))
                 ) {
 
-                    item { TopSliderSection(sliderList) }
+                    item { TopSliderSection() }
                     item {
                         TopProductHeader(
                             title = newItemList.title,
