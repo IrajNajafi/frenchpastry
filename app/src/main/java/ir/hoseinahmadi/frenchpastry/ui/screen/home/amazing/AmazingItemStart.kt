@@ -54,7 +54,8 @@ fun AmazingItemStart() {
         }
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
             Column(
-                modifier = Modifier.width(150.dp)
+                modifier = Modifier
+                    .width(150.dp)
                     .padding(start = 4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -68,7 +69,7 @@ fun AmazingItemStart() {
                     fontSize = 24.sp,
                     fontFamily = font_bold
 
-                    )
+                )
                 Text(
                     textAlign = TextAlign.Center,
                     text = "ویــژه",
@@ -78,7 +79,7 @@ fun AmazingItemStart() {
                     fontSize = 24.sp,
                     fontFamily = font_bold
 
-                    )
+                )
 
 
             }
@@ -88,21 +89,21 @@ fun AmazingItemStart() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
         ) {
-                TextButton(
-                    modifier = Modifier.padding(start = 7.dp),
-                    onClick = { }) {
-                    Text(
-                        text = "بیشتر",
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.h5
-                    )
-                    Icon(
-                        Icons.Filled.ArrowBack,
-                        contentDescription = "",
-                        tint = Color.White,
-                        modifier = Modifier.size(17.dp)
-                    )
+            TextButton(
+                modifier = Modifier.padding(start = 7.dp),
+                onClick = { }) {
+                Text(
+                    text = "بیشتر",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.h5
+                )
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    contentDescription = "",
+                    tint = Color.White,
+                    modifier = Modifier.size(17.dp)
+                )
 
 
             }

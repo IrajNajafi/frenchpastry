@@ -41,21 +41,9 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
+import ir.hoseinahmadi.frenchpastry.util.PastryImages
 
-// 🎯 لیست عکس‌ها
-private val images = listOf(
-    R.drawable.img_sh,   // 1
-    R.drawable.img_ko,   // 2
-    R.drawable.img_za,   // 3
-    R.drawable.img_na,   // 4
-    R.drawable.img_na1   // 5
-)
 
-// 🚀 جلوگیری از تکرار پشت سر هم
-private var lastIndex = -1
-fun getImageByPosition(index: Int): Int {
-    return images[index % images.size]
-}
 @Composable
 fun HomeItemCard(
     navHostController: NavHostController,
@@ -63,7 +51,7 @@ fun HomeItemCard(
     index: Int
 ) {
 
-    val imageRes = getImageByPosition(index)
+    val imageRes = PastryImages[index]
     Log.d(
         "CARD_SMART",
         "ITEM -> id=${item.ID} | title=${item.title} | image=$imageRes"

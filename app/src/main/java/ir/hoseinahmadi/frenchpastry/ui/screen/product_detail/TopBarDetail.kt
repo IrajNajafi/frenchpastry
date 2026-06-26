@@ -112,7 +112,7 @@ fun TopBarDetail(
                         context,
                         item.name,
                         item.salePrice.toString(),
-                        "https://hoseinahmadi.ir"
+                        "https://github.com/haniejh"
                     )
                 }) {
                     Icon(

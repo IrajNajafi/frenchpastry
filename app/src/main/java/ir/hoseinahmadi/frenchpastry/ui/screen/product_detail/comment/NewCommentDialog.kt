@@ -42,12 +42,11 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayAlpha
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
-import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
-import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)

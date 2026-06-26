@@ -1,8 +1,5 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.login
 
-import android.app.Activity
-import android.content.Intent
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import ir.hoseinahmadi.frenchpastry.MainActivity
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
@@ -46,7 +42,7 @@ import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

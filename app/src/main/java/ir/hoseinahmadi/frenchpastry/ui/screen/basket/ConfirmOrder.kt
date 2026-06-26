@@ -2,7 +2,6 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.basket
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,7 +40,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.ShopViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.UUID

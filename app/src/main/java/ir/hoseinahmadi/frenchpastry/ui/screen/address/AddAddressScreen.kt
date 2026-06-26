@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -42,6 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
@@ -124,25 +128,37 @@ fun AddAddressScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 5.dp)
             ) {
+                var selectedLocation by remember {
+                    mutableStateOf(LatLng(35.699739, 51.337658))
+                }
                 var check by remember {
                     mutableStateOf(false)
                 }
-
                 Text(
-                    text = "تنها محدوده استان خراسان جنوبی- شهر بیرجند پذیرفته می شود.",
+                    text = "تنها محدوده استان تهران سفارش پذیرفته میشود",
                     style = MaterialTheme.typography.body2,
                     color = Color.Black
                 )
+
                 Spacer(modifier = Modifier.height(5.dp))
 
-                GlideImage(
-                    modifier = Modifier.fillMaxWidth().height(350.dp),
-                    model = "https://raw.githubusercontent.com/ihoseinam/video-shop/main/map_img.jpg",
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-                ){
-                    it.placeholder(R.drawable.img_place_holder)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .padding(top = 8.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(6.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_map),
+                        contentDescription = "Map",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Spacer(modifier = Modifier.height(10.dp))
                 TextFieldAddAddress(
@@ -182,7 +198,7 @@ fun AddAddressScreen(
                     onClick = {
                         check = true
                         if (name.length < 8) {
-                            Toast.makeText(context, "نام را ماکل تر وارد کنید", Toast.LENGTH_SHORT)
+                            Toast.makeText(context, "نام را کاکل تر وارد کنید", Toast.LENGTH_SHORT)
                                 .show()
                         } else if (address.length < 20) {
                             Toast.makeText(context, "آدرس را کامل تر وارد کنید", Toast.LENGTH_SHORT)

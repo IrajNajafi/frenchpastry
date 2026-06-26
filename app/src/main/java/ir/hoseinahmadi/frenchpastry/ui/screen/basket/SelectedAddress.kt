@@ -292,7 +292,7 @@ fun PersonDelivery() {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 8.dp, vertical = 15.dp),
-        text = PastryHelper.pastryByLocate("برای تحویل سفارش از ساعت 8الی 12 و 17 الی 22 می توانید در روز 1403/0/0 به شیرینی فرانسوی واقع در خیابان مدرس ..... مراجعه کنید"),
+        text = PastryHelper.pastryByLocate("برای تحویل سفارش از ساعت 8الی 12 و 17 الی 22 می توانید در روز 1403/0/0 به شیرینی فرانسوی واقع در خیابان نارمک  ..... مراجعه کنید"),
         style = MaterialTheme.typography.body1,
         color = Color.Black,
         textAlign = TextAlign.Start

@@ -45,13 +45,17 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
+import ir.hoseinahmadi.frenchpastry.util.PastryImages
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun PopularItem(
     navHostController: NavHostController,
-    item: PastryItem
+    item: PastryItem,
+    index: Int
 ) {
+    val imageRes = PastryImages[index]
+
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
         shape = RoundedCornerShape(10.dp),
@@ -74,18 +78,15 @@ fun PopularItem(
                     .width(192.dp)
                     .height(115.dp)
             ) {
-                GlideImage(
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(7.dp)
-                        .clip(RoundedCornerShape(17.dp)),
-                    model = item.thumbnail,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-                ){
-                    it.placeholder(R.drawable.img_place_holder)
-
-                }
+                        .padding(5.dp)
+                        .clip(RoundedCornerShape(15.dp)),
+                    contentScale = ContentScale.Crop
+                )
                 if (item.has_discount) {
                     Box(modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.TopStart) {

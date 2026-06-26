@@ -10,13 +10,13 @@ plugins {
 
 android {
     namespace = "ir.hoseinahmadi.frenchpastry"
-    compileSdk = 34
+    compileSdk = 36
 
 
     defaultConfig {
         applicationId = "ir.hoseinahmadi.frenchpastry"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -132,7 +132,9 @@ dependencies {
 
     implementation("com.github.hamooo90:jalali-datepicker-compose:1.0.0")
     implementation("ir.huri:JalaliCalendar:1.3.3")
-
-
+//map
+    implementation("com.google.maps.android:maps-compose:6.4.4")
+    implementation("com.google.android.gms:play-services-maps:19.2.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 
 }

@@ -49,7 +49,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.InputValidation
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 

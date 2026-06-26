@@ -44,7 +44,8 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
-
+import android.content.Intent
+import android.net.Uri
 @Composable
 fun DrawerContent(
     navHostController: NavHostController,
@@ -180,18 +181,26 @@ fun DrawerContent(
                 modifier = Modifier.padding(vertical = 2.dp)
             )
 
-            TopItem(
-                icon = painterResource(id = R.drawable.ic_contact_us),
-                title = "ارتباط با ما",
-                onClick = {
-                    try {
-                        uriHandler.openUri("https://t.me/Hniejh")
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "تلگرام یافت نشد", Toast.LENGTH_SHORT).show()
-                    }
 
-                }
-            )
+                    TopItem(
+                        icon = painterResource(id = R.drawable.phon),
+                        title = "تماس با ما",
+                        onClick = {
+                            try {
+                                val intent = Intent(
+                                    Intent.ACTION_DIAL,
+                                    Uri.parse("tel:09036124101")
+                                )
+                                context.startActivity(intent)
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    "امکان برقراری تماس وجود ندارد",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    )
             HorizontalDivider(
                 thickness = 1.dp,
                 color = Color.LightGray.copy(0.5f),
@@ -310,7 +319,7 @@ fun TopItem(
             Icon(
                 painter = icon, contentDescription = "",
                 Modifier.size(28.dp),
-                tint = Color.Black
+                tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(7.dp))
             Text(

@@ -5,12 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 
 @Composable
 fun OurLoading(height:Dp,isDark:Boolean){
@@ -22,6 +22,6 @@ fun OurLoading(height:Dp,isDark:Boolean){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Loading3Dots(isDark =isDark )
+        Loading3Dots(isDark = isDark)
     }
 }

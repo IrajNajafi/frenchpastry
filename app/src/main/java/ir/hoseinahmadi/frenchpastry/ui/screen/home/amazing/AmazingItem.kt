@@ -33,25 +33,24 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.showAddOrder
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
-import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
-import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
-import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
+import ir.hoseinahmadi.frenchpastry.util.PastryImages
+
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun AmazingItem(
     navHostController: NavHostController,
-    item: PastryItem
+    item: PastryItem,
+    index: Int
 ) {
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
@@ -77,17 +76,16 @@ fun AmazingItem(
                     .width(167.dp)
                     .height(100.dp)
             ) {
-                GlideImage(
+                val imageRes = PastryImages[index]
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 2.dp, vertical = 4.dp)
-                        .clip(RoundedCornerShape(17.dp)),
-                    model = item.thumbnail,
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-                ){
-                    it.placeholder(R.drawable.img_place_holder)
-                }
+                        .padding(5.dp)
+                        .clip(RoundedCornerShape(15.dp)),
+                    contentScale = ContentScale.Crop
+                )
                 if (item.has_discount) {
                     Box(modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.TopStart) {

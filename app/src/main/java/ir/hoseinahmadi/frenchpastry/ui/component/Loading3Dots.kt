@@ -1,4 +1,4 @@
-package ir.hoseinahmadi.mydigikala.ui.component
+package ir.hoseinahmadi.frenchpastry.ui.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

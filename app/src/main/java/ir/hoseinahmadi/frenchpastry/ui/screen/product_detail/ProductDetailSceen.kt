@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,22 +36,22 @@ import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
-import ir.hoseinahmadi.frenchpastry.ui.screen.home.TopSliderSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.NewCommentDialog
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.ProductSetCommentSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.TextCommentCard
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.TopSliderSectionDetail
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
-import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.util.PastryRecipeProvider
+import ir.hoseinahmadi.frenchpastry.util.PastrySliderProvider
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @Composable
 fun ProductDetailScreen(
@@ -83,88 +82,87 @@ private fun ProductScreen(
         mutableStateOf(true)
     }
 
-
-
-    var imgSlider by remember {
-        mutableStateOf<List<String>>(emptyList())
+    val sliderImages = remember(productId) {
+        PastrySliderProvider.getSlider(productId)
     }
-
-    val fakeImg = listOf(
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        )
-
+    val recipe = remember(productId) {
+        PastryRecipeProvider.getRecipe(productId)
+    }
 
 
     LaunchedEffect(productId) {
-        launch {
-            productDetailViewModel.getProductById(productId)
-            productDetailViewModel.productItem.collectLatest {
-                if (it.http_code == 200 && it.pastry != null) {
-                    pastryItem = it
-                    imgSlider = it.pastry.gallery ?: fakeImg
-                    delay(500)
-                    loading = false
-                }
+        productDetailViewModel.getProductById(productId)
+
+        productDetailViewModel.productItem.collectLatest {
+            if (it.http_code == 200 && it.pastry != null) {
+                pastryItem = it
+                delay(500)
+                loading = false
             }
         }
     }
 
-    var img = imgSlider
-    if (img.isEmpty() ||img==null) {
-        img= listOf(
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        )
 
-    }
     val config = LocalConfiguration.current
     if (loading) {
         OurLoading(height = config.screenHeightDp.dp, isDark = true)
     } else {
+        android.util.Log.d("TITLE", pastryItem.pastry?.title ?: "")
         AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(
             bottomBar = {
-                    BottomBarHome(
-                        pastryItem.pastry!!,
-                        navHostController,
-                    )
+                BottomBarHome(
+                    pastryItem.pastry!!,
+                    navHostController,
+                )
             },
             topBar = {
-                    TopBarDetail(
-                        navHostController = navHostController,
-                        FaveEntities(
-                            id = pastryItem.pastry?.ID ?: 34,
-                            name = pastryItem.pastry?.title ?: "",
-                            imgAddress = img[0],
-                            salePrice = pastryItem.pastry?.sale_price ?: 0
-                        )
+                TopBarDetail(
+                    navHostController = navHostController,
+                    FaveEntities(
+                        id = pastryItem.pastry?.ID ?: 34,
+                        name = pastryItem.pastry?.title ?: "",
+                        imgAddress = "",
+                        salePrice = pastryItem.pastry?.sale_price ?: 0
                     )
+                )
             }
         ) {
+
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color(0xffF0F3FF))
                     .padding(it)
             ) {
-                item { Spacer(modifier = Modifier.height(10.dp)) }
-                item { Header(pastryItem.pastry!!.title) }
-                item { TopSliderSection() }
-                item { Header("مواد بکار رفته در شیرینی") }
+                item {
+                    Header(pastryItem.pastry!!.title)
+                }
+
+                item {
+                    TopSliderSectionDetail(
+                        images = sliderImages
+                    )
+                }
+
+                item {
+                    Header("مواد بکار رفته در شیرینی")
+                }
                 items(pastryItem.pastry!!.materials) {
                     MaterialCard(item = it)
                 }
                 item { Header("توضیحات") }
 
                 item {
+
+                    Spacer(Modifier.height(12.dp))
+
                     Text(
+                        text = recipe,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(8.dp),
-                        text = "شیرینی نخودچی با آرد ۱۰۰% نخودچی خالص و روغن حیوانی اصل، شیرینی برنجی از برنج معطر آسیاب شده شمال ایران همراه گلاب کاشان، ملکه بادام از خمیر کره ای با عطر هل همراه لایه ای از مخلوط عسل کوهپایه الوند، زعفران و خلال بادام، پسته و زرشک با خمیر کره ای همراه پسته کرمان و زرشک پفکی بی دانه خراسان",
-                        style = MaterialTheme.typography.body2,
-                        color = MaterialTheme.colorScheme.darkText
+                            .padding(16.dp),
+                        style = MaterialTheme.typography.body2
                     )
                 }
                 item { Header("ثبت نظر") }

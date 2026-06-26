@@ -68,7 +68,7 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.UserInfoViewModel
 import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
-import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
+import ir.hoseinahmadi.frenchpastry.ui.component.Loading3Dots
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
