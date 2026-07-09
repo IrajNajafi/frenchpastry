@@ -11,6 +11,5 @@ data class ShopEntities(
     val price: Int,
     val discount: Int,
    val img: Int,
-   // val img: Int,   // 👈 اضافه کن
     val count: Int
 )

@@ -46,7 +46,7 @@ fun GoogleMapSection(
                 ?: "آدرس پیدا نشد"
 
         } catch (e: Exception) {
-            e.printStackTrace()  // 👈 خیلی مهم
+            e.printStackTrace()
             "خطا در دریافت آدرس"
         }
     }
