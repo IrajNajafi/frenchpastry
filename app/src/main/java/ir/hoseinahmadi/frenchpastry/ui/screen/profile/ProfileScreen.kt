@@ -199,11 +199,17 @@ fun ProfileScreen(
                     painter = painterResource(R.drawable.img_sell_state4)
                 )
                 ProfileItem(
-                    onClick = {},
+                    onClick = {
+                        navHostController.navigate(Screen.CustomCakeScreen.route)
+
+                    },
                     painter = painterResource(id = R.drawable.img_cake_custom)
                 )
                 ProfileItem(
-                    onClick = {},
+                    onClick = {
+                        navHostController.navigate(Screen.MyDiscountScreen.route)
+
+                    },
                     painter = painterResource(id = R.drawable.img_my_discounts)
                 )
             }

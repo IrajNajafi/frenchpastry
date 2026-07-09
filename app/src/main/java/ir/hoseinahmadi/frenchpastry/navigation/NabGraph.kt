@@ -15,6 +15,9 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.AddAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.GetAllAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.customCakeScreen.CustomCakeScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.discountItem.DiscountItem
+import ir.hoseinahmadi.frenchpastry.ui.screen.discountItem.MyDiscountScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.fave.FaveScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
@@ -127,6 +130,23 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             OrderStatusScreen(
                 navHostController = navHostController,
                 status = backStackEntry.arguments?.getString("status") ?: ""
+            )
+        }
+        composable(Screen.CustomCakeScreen.route) {
+            CustomCakeScreen(
+                onBack = {
+                    navHostController.popBackStack()
+                }
+            )
+        }
+
+
+
+        composable(Screen.MyDiscountScreen.route) {
+            MyDiscountScreen(
+                onBack = {
+                    navHostController.popBackStack()
+                }
             )
         }
 
