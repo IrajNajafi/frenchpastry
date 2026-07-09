@@ -39,4 +39,14 @@ object PastrySliderProvider {
             else -> emptyList()
         }
     }
+    fun getThumbnail(productId: Int): Int {
+        return when(productId){
+            66 -> R.drawable.img_sh
+            63 -> R.drawable.img_ko
+            38 -> R.drawable.img_za
+            30 -> R.drawable.img_na_sh
+            34 -> R.drawable.img_na_sh
+            else -> R.drawable.img_fra
+        }
+    }
 }

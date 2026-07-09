@@ -46,6 +46,26 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.sp
+import ir.hoseinahmadi.frenchpastry.util.NotificationItem
+
 @Composable
 fun DrawerContent(
     navHostController: NavHostController,
@@ -53,6 +73,8 @@ fun DrawerContent(
     datStoreViewModel: DatStoreViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    var showAbout by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -168,13 +190,21 @@ fun DrawerContent(
                 modifier = Modifier.padding(vertical = 2.dp)
             )
 
+
             TopItem(
-                icon = painterResource(id = R.drawable.ic_about_us),
-                title = "درباره ما",
-                onClick = {
-                    Toast.makeText(context, "ما گوی ایم !", Toast.LENGTH_SHORT).show()
-                }
-            )
+                icon = painterResource(R.drawable.ic_about_us),
+                title = "درباره ما"
+            ) {
+                showAbout = true
+            }
+
+            if (showAbout) {
+                AboutUsBottomSheet(
+                    onDismiss = {
+                        showAbout = false
+                    }
+                )
+            }
             HorizontalDivider(
                 thickness = 1.dp,
                 color = Color.LightGray.copy(0.5f),
@@ -182,25 +212,25 @@ fun DrawerContent(
             )
 
 
-                    TopItem(
-                        icon = painterResource(id = R.drawable.phon),
-                        title = "تماس با ما",
-                        onClick = {
-                            try {
-                                val intent = Intent(
-                                    Intent.ACTION_DIAL,
-                                    Uri.parse("tel:09036124101")
-                                )
-                                context.startActivity(intent)
-                            } catch (e: Exception) {
-                                Toast.makeText(
-                                    context,
-                                    "امکان برقراری تماس وجود ندارد",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    )
+            TopItem(
+                icon = painterResource(id = R.drawable.phon),
+                title = "تماس با ما",
+                onClick = {
+                    try {
+                        val intent = Intent(
+                            Intent.ACTION_DIAL,
+                            Uri.parse("tel:09036124101")
+                        )
+                        context.startActivity(intent)
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            context,
+                            "امکان برقراری تماس وجود ندارد",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            )
             HorizontalDivider(
                 thickness = 1.dp,
                 color = Color.LightGray.copy(0.5f),
@@ -331,4 +361,175 @@ fun TopItem(
     }
 
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AboutUsBottomSheet(
+    onDismiss: () -> Unit
+) {
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(),
+        shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+
+                .padding(20.dp)
+        ) {
+
+            Text(
+                text = "درباره ما",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            Text(
+                text = """
+به French Pastry  خوش آمدید.
+
+ما با هدف ارائه تجربه‌ای متفاوت از خرید آنلاین شیرینی و دسرهای فرانسوی، این سامانه را طراحی کرده‌ایم تا کاربران بتوانند با دسترسی آسان به مجموعه‌ای متنوع از محصولات، سفارش خود را به‌صورت سریع، آسان و مطمئن ثبت کنند.
+
+در French Pastry تلاش می‌کنیم با استفاده از مواد اولیه باکیفیت، دستورهای اصیل قنادی فرانسوی و رعایت استانداردهای تهیه، تولید و بسته‌بندی، محصولاتی با طعم و کیفیت مطلوب به مشتریان عزیز ارائه دهیم.
+
+تمامی محصولات با دقت و حساسیت بالا آماده‌سازی شده و با هدف جلب رضایت مشتریان عرضه می‌شوند تا تجربه‌ای شیرین و خاطره‌انگیز از خرید آنلاین برای شما فراهم شود.
+
+────────────────────────────
+
+📌 توجه
+
+این اپلیکیشن در قالب پروژه کارشناسی رشته مهندسی کامپیوتر طراحی و پیاده‌سازی شده است و با هدف نمایش فرآیند توسعه یک سامانه فروش آنلاین مبتنی بر سیستم‌عامل اندروید ارائه می‌شود.
+
+در این پروژه از فناوری‌های روز اندروید از جمله Jetpack Compose، معماری MVVM، Hilt، Navigation، DataStore، Retrofit و سایر ابزارهای مرتبط استفاده شده است تا نمونه‌ای از یک اپلیکیشن مدرن و استاندارد ارائه گردد.
+
+از اینکه French Pastry را برای مشاهده و ارزیابی انتخاب کرده‌اید، صمیمانه سپاسگزاریم.
+""".trimIndent(),
+                style = MaterialTheme.typography.bodyMedium,
+                lineHeight = 28.sp
+            )
+            Spacer(Modifier.height(24.dp))
+
+            ElevatedCard(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        Icons.Default.Phone,
+                        contentDescription = null
+                    )
+
+                    Spacer(Modifier.width(12.dp))
+
+                    Column {
+
+                        Text(
+                            "شماره تماس",
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Text("09036124101")
+
+                    }
+
+                }
+
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            ElevatedCard(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        Icons.Default.Email,
+                        contentDescription = null
+                    )
+
+                    Spacer(Modifier.width(12.dp))
+
+                    Column {
+
+                        Text(
+                            "ایمیل",
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Text("hnie.jh@gmail.com")
+
+                    }
+
+                }
+
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            ElevatedCard(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        Icons.Default.Code,
+                        contentDescription = null
+                    )
+
+                    Spacer(Modifier.width(12.dp))
+
+                    Column {
+
+                        Text(
+                            "GitHub",
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        Text("github.com/haniejh")
+
+                    }
+
+                }
+
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = onDismiss
+            ) {
+                Text("بستن")
+            }
+
+            Spacer(Modifier.height(10.dp))
+
+        }
+    }
 }

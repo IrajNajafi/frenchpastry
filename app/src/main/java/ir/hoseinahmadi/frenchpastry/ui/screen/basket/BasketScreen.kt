@@ -133,7 +133,10 @@ val scope = rememberCoroutineScope()
                         scope.launch {
                             pagerState.animateScrollToPage(1)
                         }
-                    })
+                    },
+                        navHostController = navHostController
+
+                    )
                 }
 
                 1 -> {
@@ -205,7 +208,8 @@ private fun TopHead(
 @Composable
 private fun Orders(
     shopViewModel: ShopViewModel,
-   onClick: () -> Unit
+   onClick: () -> Unit,
+    navHostController: NavHostController
 ) {
     val allItem by shopViewModel.allItemShop.collectAsState(initial = emptyList())
 
@@ -242,7 +246,8 @@ private fun Orders(
                 }
             }else{
                 items(allItem) {
-                    CartItemCard(item = it)
+                    CartItemCard(item = it,  navHostController = navHostController)
+
                 }
             }
 

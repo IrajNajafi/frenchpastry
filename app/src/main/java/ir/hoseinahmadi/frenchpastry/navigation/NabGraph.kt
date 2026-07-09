@@ -18,6 +18,7 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.fave.FaveScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.order.OrderStatusScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.CommentAndRepliesScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.profile.ProfileInfoScreen
@@ -112,6 +113,21 @@ fun SetUpNavGraph(navHostController: NavHostController) {
 
         composable(Screen.FaveScreen.route) {
             FaveScreen(navHostController = navHostController)
+        }
+        composable(
+            route = Screen.OrderStatusScreen.route + "?status={status}",
+            arguments = listOf(
+                navArgument("status") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) { backStackEntry ->
+
+            OrderStatusScreen(
+                navHostController = navHostController,
+                status = backStackEntry.arguments?.getString("status") ?: ""
+            )
         }
 
     }

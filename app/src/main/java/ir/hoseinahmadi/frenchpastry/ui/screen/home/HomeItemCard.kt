@@ -92,6 +92,7 @@ fun HomeItemCard(
                         .padding(5.dp)
                         .clip(RoundedCornerShape(15.dp)),
                     contentScale = ContentScale.Crop
+
                 )
 
                 // 🔥 DISCOUNT

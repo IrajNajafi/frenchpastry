@@ -155,15 +155,62 @@ fun ProfileScreen(
                     },
                     painter = painterResource(id = R.drawable.img_my_address)
                 )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 4.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    BasketItem(
+                        onClick = {
+                            navHostController.navigate(
+                                Screen.OrderStatusScreen.route + "?status=pending"
+                            )
+                        },
+                        painter = painterResource(R.drawable.img_sell_state1)
+                    )
+
+                    BasketItem(
+                        onClick = {
+                            navHostController.navigate(
+                                Screen.OrderStatusScreen.route + "?status=review"
+                            )
+                        },
+                        painter = painterResource(R.drawable.img_sell_state2)
+                    )
 
 
+                    BasketItem(
+                        onClick = {
+                            navHostController.navigate(
+                                Screen.OrderStatusScreen.route + "?status=preparing"
+                            )
+                        },
+                        painter = painterResource(R.drawable.img_sell_state3)
+                    )
+                }
+
+                BasketItem(
+                    onClick = {
+                        navHostController.navigate(
+                            Screen.OrderStatusScreen.route + "?status=delivered"
+                        )
+                    },
+                    painter = painterResource(R.drawable.img_sell_state4)
+                )
+                ProfileItem(
+                    onClick = {},
+                    painter = painterResource(id = R.drawable.img_cake_custom)
+                )
+                ProfileItem(
+                    onClick = {},
+                    painter = painterResource(id = R.drawable.img_my_discounts)
+                )
             }
-
 
         }
 
+
     }
-
-
 }
 

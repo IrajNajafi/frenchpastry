@@ -46,23 +46,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
+import androidx.navigation.navArgument
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.util.PastryImages
 import ir.hoseinahmadi.frenchpastry.viewModel.ShopViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CartItemCard(
     item: ShopEntities,
-    shopViewModel: ShopViewModel = hiltViewModel()
+    shopViewModel: ShopViewModel = hiltViewModel(), navHostController: NavHostController
 ) {
+    
     AlertDeleteOrder(item, shopViewModel)
     Card(
         shape = RoundedCornerShape(0.dp),
@@ -72,7 +78,11 @@ fun CartItemCard(
         modifier = Modifier
             .padding(horizontal = 12.dp)
             .fillMaxWidth(),
-        onClick = { /*TODO*/ },
+        onClick = {
+            navHostController.navigate(
+                Screen.ProductDetailScreen.route + "?id=${item.id}"
+            )
+        },
     )
     {
         Text(
@@ -106,15 +116,17 @@ fun CartItemCard(
                     tint = Color.DarkGray
                 )
             }
-            GlideImage(
+
+            Image(
+                painter = painterResource(id = item.img),
+                contentDescription = null,
                 modifier = Modifier
                     .size(140.dp, 92.dp)
                     .padding(4.dp)
                     .clip(RoundedCornerShape(15.dp)),
-                model = item.img,
-                contentDescription = "",
                 contentScale = ContentScale.FillBounds
             )
+
             Column(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

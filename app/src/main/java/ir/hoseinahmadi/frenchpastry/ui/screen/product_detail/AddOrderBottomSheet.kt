@@ -50,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Pastry
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
@@ -60,6 +61,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.util.PastrySliderProvider
 import ir.hoseinahmadi.frenchpastry.viewModel.ShopViewModel
 import kotlinx.coroutines.launch
 
@@ -242,14 +244,7 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
         mutableIntStateOf(1)
     }
 
-    var img = item.gallery
-    if (item.gallery ==null||img!!.isEmpty()) {
-        img= listOf(
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        )
 
-    }
 
     Column {
 
@@ -653,7 +648,7 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         price = item.price,
                         discount = item.discount_percent,
                         title = item.title,
-                        img = img!![0],
+                        img = PastrySliderProvider.getThumbnail(item.ID),
                         count = kilogram
                     )
                 )
@@ -685,14 +680,14 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
     var time by remember {
         mutableStateOf("شنبه")
     }
-    var img = item.gallery
+  /*  var img = item.gallery
     if (item.gallery ==null||img!!.isEmpty()) {
         img= listOf(
             "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
             "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
         )
 
-    }
+    }*/
 
     Column {
 
@@ -1056,8 +1051,9 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         price = item.price,
                         discount = item.discount_percent,
                         title = item.title,
-                        img = img!![0],
-                        count = kilogram
+                        img =  PastrySliderProvider.getThumbnail(item.ID),
+                        count = kilogram,
+
                     )
                 )
                 Toast.makeText(context, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT).show()

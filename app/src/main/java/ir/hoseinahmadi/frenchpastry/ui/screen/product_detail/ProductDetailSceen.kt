@@ -142,6 +142,7 @@ private fun ProductScreen(
                 item {
                     TopSliderSectionDetail(
                         images = sliderImages
+
                     )
                 }
 
